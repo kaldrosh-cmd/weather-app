@@ -1,0 +1,146 @@
+/* Reset i podstawowe ustawienia */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #0f172a; /* Ciemny granat/grafit */
+  color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Nagłówek główny */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  color: #38bdf8; /* Nowoczesny błękitny akcent */
+}
+
+/* Formularz wyszukiwania */
+#search-form {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1rem;
+}
+
+/* Ukrycie etykiety wizualnie, ale zachowanie jej dla czytników ekranu (accessibility) */
+label[for="search"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+#search {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #f8fafc;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search::placeholder {
+  color: #94a3b8;
+}
+
+#search:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+button[type="submit"] {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  background-color: #38bdf8;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+  background-color: #7dd3fc;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Komunikaty (np. ładowanie / błąd) */
+#message {
+  min-height: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #fb7185; /* Delikatny koralowy dla błędów */
+  text-align: center;
+}
+
+/* Karta z wynikami pogody */
+#location-weather {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Ukrywa kartę, dopóki h2#location jest puste (brak wyników) */
+#location-weather:has(#location:empty) {
+  display: none;
+}
+
+#location {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #334155;
+  color: #f8fafc;
+}
+
+#location-weather p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  font-size: 1rem;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+#location-weather p:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+#location-weather span {
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+/* Wyróżnienie temperatury */
+#temp {
+  font-size: 1.25rem;
+  color: #38bdf8;
+}
