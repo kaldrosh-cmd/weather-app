@@ -17,3 +17,4 @@ The app uses [Visual Crossing’s free weather API](https://www.visualcrossing.c
 ## Design decision
 
 I use `processWeather()` to turn the API response into a small object. For example, `currentConditions.feelslike` becomes `weather.feelsLike` in the UI. If I switch weather providers, I can update `getWeather()` to call the new API and `processWeather()` to map its fields.
+I keep temperatures in °C and wind speed in km/h. When the user switches units, `renderWeather()` converts the original values to °F and mph for display. This makes switching instant, saves an API request, and avoids rounding errors when switching back and forth.
