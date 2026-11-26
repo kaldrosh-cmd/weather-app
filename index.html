@@ -14,6 +14,7 @@
         <input type="search" id="search" name="search" placeholder="Search location" required>
         <button type="submit">Search</button>
     </form>
+    <p id="loading" hidden>Loading…</p>
     <p id="message"></p>
     <div id="location-weather" hidden>
         <h2 id="location"></h2>
@@ -22,6 +23,7 @@
         <p>Conditions: <span id="conditions"></span></p>
         <p>Humidity: <span id="humidity"></span></p>
         <p>Wind Speed: <span id="wind-speed"></span></p>
+        <button type="button" id="unit-toggle"></button>
     </div>
 </body>
 </html>

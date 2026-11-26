@@ -8,15 +8,41 @@ const conditionsEl = document.querySelector("#conditions");
 const humidityEl = document.querySelector("#humidity");
 const windSpeedEl = document.querySelector("#wind-speed");
 const weatherEl = document.querySelector("#location-weather");
+const loadingEl = document.querySelector("#loading");
+const unitToggleEl = document.querySelector("#unit-toggle");
 
+let currentWeather = null;
+let currentUnit = "C";
+function toMph(kmh) {
+  return Math.round((kmh / 1.609) * 10) / 10;
+}
+function toFahrenheit(celsius) {
+  return Math.round(((celsius * 9) / 5 + 32) * 10) / 10;
+}
+function toggleUnit() {
+  if (currentUnit === "C") {
+    currentUnit = "F";
+  } else {
+    currentUnit = "C";
+  }
+  renderWeather(currentWeather);
+}
 function renderWeather(weather) {
+  if (currentUnit === "F") {
+    unitToggleEl.textContent = "Show °C";
+    tempEl.textContent = `${toFahrenheit(weather.temp)}°F`;
+    feelsLikeEl.textContent = `${toFahrenheit(weather.feelsLike)}°F`;
+    windSpeedEl.textContent = `${toMph(weather.windSpeed)} mph`;
+  } else {
+    unitToggleEl.textContent = "Show °F";
+    tempEl.textContent = `${weather.temp}°C`;
+    feelsLikeEl.textContent = `${weather.feelsLike}°C`;
+    windSpeedEl.textContent = `${weather.windSpeed} km/h`;
+  }
   weatherEl.hidden = false;
   locationEl.textContent = weather.location;
-  tempEl.textContent = `${weather.temp}°C`;
-  feelsLikeEl.textContent = `${weather.feelsLike}°C`;
   conditionsEl.textContent = weather.conditions;
   humidityEl.textContent = `${weather.humidity}%`;
-  windSpeedEl.textContent = `${weather.windSpeed} km/h`;
 }
 function processWeather(data) {
   return {
@@ -40,8 +66,9 @@ async function handleSubmit(event) {
   message.textContent = "";
   const location = search.value.trim();
   try {
-    const weatherData = await getWeather(location);
-    renderWeather(weatherData);
+    loadingEl.hidden = false;
+    currentWeather = await getWeather(location);
+    renderWeather(currentWeather);
   } catch (error) {
     weatherEl.hidden = true;
     if (error.status === 400) {
@@ -50,6 +77,8 @@ async function handleSubmit(event) {
       message.textContent = "Something went wrong";
     }
     console.error(error);
+  } finally {
+    loadingEl.hidden = true;
   }
 }
 async function getJson(url) {
@@ -64,3 +93,4 @@ async function getJson(url) {
 }
 
 form.addEventListener("submit", handleSubmit);
+unitToggleEl.addEventListener("click", toggleUnit);
